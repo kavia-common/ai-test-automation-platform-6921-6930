@@ -2,12 +2,15 @@
 
 This project provides a minimal React template with a clean, modern UI and minimal dependencies.
 
+It now includes a static Corporate Navy themed HTML/CSS/JS app under `public/` that can run without additional dependencies and communicates with a Python FastAPI backend.
+
 ## Features
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
+- **Lightweight**: No heavy UI frameworks - vanilla CSS and minimal JS
+- **Modern UI**: Clean, responsive design with Corporate Navy styling
 - **Fast**: Minimal dependencies for quick loading times
 - **Simple**: Easy to understand and modify
+- **Backend-ready**: Reads API base from environment
 
 ## Getting Started
 
@@ -15,8 +18,22 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in development mode.\
+Runs the app in development mode.  
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The static app is served from `public/index.html` and will be accessible at the root.
+
+### Environment
+
+The frontend reads the backend URL from:
+
+- `REACT_APP_API_BASE` (example: `http://localhost:8000`)
+
+Set this in your `.env` file at `frontend/.env` before starting:
+
+```
+REACT_APP_API_BASE=http://localhost:8000
+```
 
 ### `npm test`
 
@@ -24,59 +41,29 @@ Launches the test runner in interactive watch mode.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the app for production to the `build` folder.
 
 ## Customization
 
 ### Colors
 
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
+Corporate Navy palette is implemented in `public/styles.css`.
 
 ### Components
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+This template uses pure HTML/CSS components instead of a UI framework. See `public/styles.css`.
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+## Backend
+
+A FastAPI backend is scaffolded at `../backend`. Start it with:
+
+```
+pip install -r backend/requirements.txt
+uvicorn backend.main:app --host 0.0.0.0 --port 8000
+```
+
+Ensure `REACT_APP_API_BASE` points to this backend (default is `http://localhost:8000`).
 
 ## Learn More
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

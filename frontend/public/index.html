@@ -1,47 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#1A1A1A" />
+    <meta charset="utf-8">
     <meta
-      name="description"
-      content="KAVIA AI Application"
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <!-- Load Inter font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>KAVIA App</title>
+    <title>AI Test Automation Platform</title>
+    <meta name="description" content="AI-enabled test automation platform" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    <div id="app">
+      <aside class="sidebar" aria-label="Sidebar Navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">A</div>
+          <div class="brand-text">
+            <div class="brand-title">AI Testing</div>
+            <div class="brand-sub">Automation Suite</div>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" data-tab="tests" aria-controls="panel-tests" aria-selected="true">
+            <span>Test Cases</span>
+          </button>
+          <button class="nav-item" data-tab="runs" aria-controls="panel-runs" aria-selected="false">
+            <span>Runs</span>
+          </button>
+          <button class="nav-item" data-tab="results" aria-controls="panel-results" aria-selected="false">
+            <span>Results</span>
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="status-dot" id="health-dot" title="Backend health"></div>
+          <span id="health-text">Checking backend...</span>
+        </div>
+      </aside>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+      <main class="main">
+        <header class="topbar" role="banner">
+          <div class="topbar-title">AI Test Automation Platform</div>
+          <div class="topbar-actions">
+            <button id="run-all" class="btn btn-accent" title="Run all tests">
+              ▶ Run All
+            </button>
+            <div class="avatar" title="User"><span>U</span></div>
+          </div>
+        </header>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        <section class="content">
+          <!-- Tests Panel -->
+          <div id="panel-tests" class="panel active" role="tabpanel" aria-labelledby="Test Cases">
+            <div class="panel-header">
+              <h2>Test Cases</h2>
+              <div class="panel-actions">
+                <button id="new-test" class="btn">+ New Test</button>
+              </div>
+            </div>
+
+            <div id="test-form" class="card hidden" aria-live="polite">
+              <form id="form-test">
+                <input type="hidden" id="test-id" />
+                <div class="form-row">
+                  <label for="test-name">Name</label>
+                  <input id="test-name" type="text" placeholder="e.g., Login flow should succeed" required />
+                </div>
+                <div class="form-row">
+                  <label for="test-steps">Steps (one per line)</label>
+                  <textarea id="test-steps" rows="6" placeholder="1. Go to /login&#10;2. Enter credentials&#10;3. Click submit&#10;4. Expect dashboard"></textarea>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="button" id="cancel-edit" class="btn btn-ghost">Cancel</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="table-responsive">
+                <table class="table" aria-label="Test cases table">
+                  <thead>
+                    <tr>
+                      <th style="width: 20%">Name</th>
+                      <th>Steps</th>
+                      <th style="width: 15%">Created</th>
+                      <th style="width: 15%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tests-tbody">
+                    <!-- rows injected by app.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Runs Panel -->
+          <div id="panel-runs" class="panel" role="tabpanel" aria-labelledby="Runs">
+            <div class="panel-header">
+              <h2>Runs</h2>
+            </div>
+            <div class="card">
+              <p class="muted">This section lists recent run requests. Trigger runs from Test Cases or use "Run All".</p>
+              <ul id="runs-list" class="list"></ul>
+            </div>
+          </div>
+
+          <!-- Results Panel -->
+          <div id="panel-results" class="panel" role="tabpanel" aria-labelledby="Results">
+            <div class="panel-header">
+              <h2>Results</h2>
+            </div>
+            <div class="card">
+              <div id="results" class="results"></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="/app.js"></script>
   </body>
 </html>
