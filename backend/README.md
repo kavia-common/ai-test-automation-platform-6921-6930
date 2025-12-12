@@ -1,8 +1,8 @@
 # AI Test Automation Backend
 
-Minimal FastAPI backend providing:
+FastAPI backend providing:
 - GET /health
-- CRUD /tests (in-memory, thread-safe)
+- CRUD /tests (persisted via SQLite using SQLModel)
 - POST /tests/run (simulated execution, returns mock results)
 
 ## Quickstart
@@ -16,7 +16,11 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 pip install -r requirements.txt
 
-3) Run the server
+3) Configure environment (optional)
+
+Copy .env.example to .env and set variables. If not set, DATABASE_URL defaults to sqlite:///./data.db.
+
+4) Run the server
 
 uvicorn main:app --host 0.0.0.0 --port 8000
 
@@ -25,3 +29,11 @@ OpenAPI docs will be available at:
 - OpenAPI JSON: http://localhost:8000/openapi.json
 
 CORS is configured for http://localhost:3000 and preview origins under *.cloud.kavia.ai.
+
+## Persistence
+
+- The service uses SQLModel/SQLAlchemy with SQLite by default.
+- DATABASE_URL environment variable can override the database connection string.
+- Default: sqlite:///./data.db (database file in backend directory).
+
+Schema is created automatically on startup.
